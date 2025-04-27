@@ -85,6 +85,19 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'api_gest_immo_django',  # Nom de la base de données
+#         'USER': 'root',             # Username de la bdd
+#         'PASSWORD': '',             # (Pas de mot de passe par défaut dans XAMPP)
+#         'HOST': 'localhost',        # Adresse locale
+#         'PORT': '3306',             # Port de MySQL par défaut
+#     }
+# }
+
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -134,3 +147,6 @@ REST_FRAMEWORK = {
              'rest_framework_simplejwt.authentication.JWTAuthentication',
          )
      }
+
+#   Par défaut Django utilise son User standard. Là, on lui dit "utilise MON modèle à moi".
+AUTH_USER_MODEL = 'users.User'

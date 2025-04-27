@@ -1,135 +1,193 @@
+"""
 
-# 🔷🔷🔸🔷🔷🔸🔸🔷🔷🔷🔷🔸🔹🔷🔷🔷🔹🔹🔷🔷🔸🔸🔶🔶🔶🔸🔸🔸
+  structure du projet
 
-# STEP 1 : Installer Django et créer la structure du projet
-# 1.1 — Installer Django et Django REST Framework
-# Dans ton terminal :
+  /gestion_immo/
+  │
+  ├── manage.py
+  ├── requirements.txt
+  ├── /gestion_immo/
+  │   ├── settings.py
+  │   ├── urls.py
+  │
+  ├── /users/           app pour gérer l'authentification
+  │   ├── models.py
+  │   ├── serializers.py
+  │   ├── views.py
+  │   ├── urls.py
+  │
+  ├── /properties/      app pour gérer les biens immobiliers
+  │   ├── models.py
+  │   ├── serializers.py
+  │   ├── views.py
+  │   ├── urls.py
+  │
+  └── /rentals/         app pour gérer la location
+      ├── models.py
+      ├── serializers.py
+      ├── views.py
+      ├── urls.py
 
-# # 1. Créer un environnement virtuel (super important pour isoler ton projet)
-# python -m venv env
+  🔷🔷🔸🔷🔷🔸🔸🔷🔷🔷🔷🔸🔹🔷🔷🔷🔹🔹🔷🔷🔸🔸🔶🔶🔶🔸🔸🔸
+  STEP 1 : Installer Django et créer la structure du projet
+  🔷🔷🔸🔷🔷🔸🔸🔷🔷🔷🔷🔸🔹🔷🔷🔷🔹🔹🔷🔷🔸🔸🔶🔶🔶🔸🔸🔸
 
-# # 2. Activer ton environnement virtuel
-# # Sur Windows :
-# env\Scripts\activate
+  1.1 — Installer Django et Django REST Framework
+  Dans ton terminal :
 
-# # 3. Installer Django et Django REST Framework
-# pip install django djangorestframework
+    1. Créer un environnement virtuel (super important pour isoler ton projet)
+  python -m venv env
 
-# # 4. Installer la bibliothèque pour authentification plus propre (JWT)
-# pip install djangorestframework-simplejwt
+    2. Activer ton environnement virtuel
+    Sur Windows :
+  env\Scripts\activate
 
-# Pourquoi on fait ça ?
+    3. Installer Django et Django REST Framework
+  pip install django djangorestframework
 
-# Le venv (env/) te protège : ton projet utilise ses propres versions des librairies, sans toucher au reste de ton PC.
-# Django = framework principal.
-# Django REST Framework = module pour transformer Django en API rapide.
-# SimpleJWT = gérer l’authentification avec des jetons sécurisés.
+    4. Installer la bibliothèque pour authentification plus propre (JWT)
+  pip install djangorestframework-simplejwt
+
+  Pourquoi on fait ça ?
+
+  Le venv (env/) te protège : ton projet utilise ses propres versions des librairies, sans toucher au reste de ton PC.
+  Django = framework principal.
+  Django REST Framework = module pour transformer Django en API rapide.
+  SimpleJWT = gérer l’authentification avec des jetons sécurisés.
+
+  🔷🔷🔸🔷🔷🔸🔸🔷🔷🔷🔷🔸🔹🔷🔷🔷🔹🔹🔷🔷🔸🔸🔶🔶🔶🔸🔸🔸
+    Créer le projet principal
+  django-admin startproject gestion_immo .
+  Attention au . à la fin : ça crée le projet dans le dossier où tu es actuellement, sans créer un sous-dossier en trop.
+
+  Résultat :
+  Un dossier /gestion_immo/ contenant :
+  settings.py : config du projet
+  urls.py : les routes principales
+  etc.
+  🔸🔸🔶🔶🔶🔸🔸🔸
+    1. Application pour gérer les utilisateurs
+  python manage.py startapp users
+
+    2. Application pour gérer les biens immobiliers
+  python manage.py startapp properties
+
+    3. Application pour gérer les locations
+  python manage.py startapp rentals
+
+  Pourquoi séparer ?
+
+  users/ → gère l'inscription / connexion
+  properties/ → gère les maisons, appartements à louer
+  rentals/ → gère les réservations de biens par des client
+
+  🔸🔸🔶🔶🔶🔸🔸🔸
+
+  1.4 — Installer tes apps dans settings.py
+  Ouvre le fichier gestion_immo/settings.py, trouve la liste INSTALLED_APPS et ajoute :
+
+  INSTALLED_APPS = [
+      ...
+      'rest_framework',
+      'rest_framework_simplejwt',
+      'users',
+      'properties',
+      'rentals',
+  ]
+  Pourquoi ?
+  Django doit savoir que tes nouvelles apps existent pour pouvoir les utiliser !
+
+  🔸🔸🔶🔶🔶🔸🔸🔸
+      1.5 — Config de base pour Django REST
+      Toujours dans settings.py, tout en bas, ajoute cette config pour REST Framework :
+
+      REST_FRAMEWORK = {
+          'DEFAULT_AUTHENTICATION_CLASSES': (
+              'rest_framework_simplejwt.authentication.JWTAuthentication',
+          )
+      }
+      Pourquoi ?
+      Ça dit à Django : "Hey, pour sécuriser mon API, utilise les tokens JWT !"
+
+  🔸🔸🔶🔶🔶🔸🔸🔸
+
+      1.6 — Préparer les routes principales
+      Dans gestion_immo/urls.py, écris :
+
+      from django.contrib import admin
+      from django.urls import path, include
+
+      urlpatterns = [
+          path('admin/', admin.site.urls),
+          path('api/', include('users.urls')),
+          path('api/', include('properties.urls')),
+          path('api/', include('rentals.urls')),
+      ]
+      Pourquoi ?
+      On dit à Django : "Quand une URL commence par /api/, regarde dans les apps pour savoir quoi faire."
+
+      
 
 
-# 🔷🔷🔸🔷🔷🔸🔸🔷🔷🔷🔷🔸🔹🔷🔷🔷🔹🔹🔷🔷🔸🔸🔶🔶🔶🔸🔸🔸
-# # Créer le projet principal
-# django-admin startproject gestion_immo .
-# Attention au . à la fin : ça crée le projet dans le dossier où tu es actuellement, sans créer un sous-dossier en trop.
 
-# Résultat :
-# Un dossier /gestion_immo/ contenant :
-# settings.py : config du projet
-# urls.py : les routes principales
-# etc.
-# 🔸🔸🔶🔶🔶🔸🔸🔸
-# # 1. Application pour gérer les utilisateurs
-# python manage.py startapp users
+      
+  🔷🔷🔸🔷🔷🔸🔸🔷🔷🔷🔷🔸🔹🔷🔷🔷🔹🔹🔷🔷🔸🔸🔶🔶🔶🔸🔸🔸
+  STEP 2 : Authentification - Partie Users
+  🔷🔷🔸🔷🔷🔸🔸🔷🔷🔷🔷🔸🔹🔷🔷🔷🔹🔹🔷🔷🔸🔸🔶🔶🔶🔸🔸🔸
 
-# # 2. Application pour gérer les biens immobiliers
-# python manage.py startapp properties
+  2.1 Créer le modèle Utilisateur
+  On veut que chaque utilisateur soit soit admin, soit client.
 
-# # 3. Application pour gérer les locations
-# python manage.py startapp rentals
+  Dans users/models.py, écris :
 
-# Pourquoi séparer ?
+  from django.contrib.auth.models import AbstractUser
+  from django.db import models
 
-# users/ → gère l'inscription / connexion
-# properties/ → gère les maisons, appartements à louer
-# rentals/ → gère les réservations de biens par des client
+  class User(AbstractUser):
+      is_client = models.BooleanField(default=True)    Par défaut c'est un client
+      is_admin = models.BooleanField(default=False)    L'admin sera défini manuellement
+  Explication :
 
-# 🔸🔸🔶🔶🔶🔸🔸🔸
+  On hérite de AbstractUser → Django sait déjà gérer username, password, etc.
+  On ajoute juste is_client et is_admin pour savoir qui est qui dans ton appli.
 
-# 1.4 — Installer tes apps dans settings.py
-# Ouvre le fichier gestion_immo/settings.py, trouve la liste INSTALLED_APPS et ajoute :
-
-# INSTALLED_APPS = [
-#     ...
-#     'rest_framework',
-#     'rest_framework_simplejwt',
-#     'users',
-#     'properties',
-#     'rentals',
-# ]
-# Pourquoi ?
-# Django doit savoir que tes nouvelles apps existent pour pouvoir les utiliser !
-
-# 🔸🔸🔶🔶🔶🔸🔸🔸
-    # 1.5 — Config de base pour Django REST
-    # Toujours dans settings.py, tout en bas, ajoute cette config pour REST Framework :
-
-    # REST_FRAMEWORK = {
-    #     'DEFAULT_AUTHENTICATION_CLASSES': (
-    #         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    #     )
-    # }
-    # Pourquoi ?
-    # Ça dit à Django : "Hey, pour sécuriser mon API, utilise les tokens JWT !"
-
-# 🔸🔸🔶🔶🔶🔸🔸🔸
-
-    # 1.6 — Préparer les routes principales
-    # Dans gestion_immo/urls.py, écris :
-
-    # from django.contrib import admin
-    # from django.urls import path, include
-
-    # urlpatterns = [
-    #     path('admin/', admin.site.urls),
-    #     path('api/', include('users.urls')),
-    #     path('api/', include('properties.urls')),
-    #     path('api/', include('rentals.urls')),
-    # ]
-    # Pourquoi ?
-    # On dit à Django : "Quand une URL commence par /api/, regarde dans les apps pour savoir quoi faire."
+  🔸🔸🔶🔶🔶🔸🔸🔸
 
 
+  2.2 Dire à Django d’utiliser ton User personnalisé   
+  Dans settings.py, ajoute cette ligne :   
 
+  AUTH_USER_MODEL = 'users.User'
+  Pourquoi ?
+  Par défaut Django utilise son User standard. Là, on lui dit "utilise MON modèle à moi".
 
+  🔸🔸🔶🔶🔶🔸🔸🔸
+2.3 Créer le Serializer pour l’inscription
+    Dans users/serializers.py
+    Explication :
+    On définit quels champs on expose à l’API
+    create_user → ça chiffre le mot de passe automatiquement pour la sécurité
+    
+  🔸🔸🔶🔶🔶🔸🔸🔸
+  2.4 Créer les Views
+    Dans users/views.py
+    Explication :
+    CreateAPIView = vue Django REST qui permet de faire des créations (POST) très facilement.
+ 
+   🔸🔸🔶🔶🔶🔸🔸🔸
+   2.5 Configurer les URLs
+    Dans users/urls.py
+    Explication :
+    /register/ → pour inscrire un nouvel utilisateur
+    /login/ → pour se connecter et obtenir un Token JWT
+    /token/refresh/ → pour rafraîchir ton token JWT quand il expire
+  
+  🔸🔸🔶🔶🔶🔸🔸🔸
+  🔸🔸🔶🔶🔶🔸🔸🔸
+  🔸🔸🔶🔶🔶🔸🔸🔸
+  🔸🔸🔶🔶🔶🔸🔸🔸
+  🔸🔸🔶🔶🔶🔸🔸🔸
+  🔸🔸🔶🔶🔶🔸🔸🔸
+      🔸🔸🔶🔶🔶🔸🔸🔸
 
-# 🔷🔷🔸🔷🔷🔸🔸🔷🔷🔷🔷🔸🔹🔷🔷🔷🔹🔹🔷🔷🔸🔸🔶🔶🔶🔸🔸🔸
-
-
-# structure du projet
-
-# /gestion_immo/
-# │
-# ├── manage.py
-# ├── requirements.txt
-# ├── /gestion_immo/
-# │   ├── settings.py
-# │   ├── urls.py
-# │
-# ├── /users/         # app pour gérer l'authentification
-# │   ├── models.py
-# │   ├── serializers.py
-# │   ├── views.py
-# │   ├── urls.py
-# │
-# ├── /properties/    # app pour gérer les biens immobiliers
-# │   ├── models.py
-# │   ├── serializers.py
-# │   ├── views.py
-# │   ├── urls.py
-# │
-# └── /rentals/       # app pour gérer la location
-#     ├── models.py
-#     ├── serializers.py
-#     ├── views.py
-#     ├── urls.py
-
-# 🔷🔷🔸🔷🔷🔸🔸🔷🔷🔷🔷🔸🔹🔷🔷🔷🔹🔹🔷🔷🔸🔸🔶🔶🔶🔸🔸🔸
+  """
