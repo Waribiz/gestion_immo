@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'users',
+    'properties',
+    'rentals',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +126,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+    # Ça dit à Django : "Hey, pour sécuriser mon API, utilise les tokens JWT !"
+REST_FRAMEWORK = {
+         'DEFAULT_AUTHENTICATION_CLASSES': (
+             'rest_framework_simplejwt.authentication.JWTAuthentication',
+         )
+     }
