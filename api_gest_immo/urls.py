@@ -20,7 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
 # On dit à Django : "Quand une URL commence par /api/, regarde dans les apps pour savoir quoi faire."
-    path('api/', include('users.urls')),
-    # path('api/', include('properties.urls')),
+    path('api/users/', include('users.urls')),
+    path('api/properties/', include('properties.urls')),
     # path('api/', include('rentals.urls')),
 ]
