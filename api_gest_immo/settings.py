@@ -78,27 +78,27 @@ WSGI_APPLICATION = 'api_gest_immo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 
 
 # # connexion vers MYSQL 9.3 que j'ai installé 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'api_gest_immo_django',  # Nom de la base de données
-        'USER': 'root',             # Username de la bdd
-        'PASSWORD': 'waribiz',         
-        'HOST': 'localhost',        # Adresse locale
-        'PORT': '3307',             # Port de MySQL
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'api_gest_immo_django',  # Nom de la base de données
+#         'USER': 'root',             # Username de la bdd
+#         'PASSWORD': 'waribiz',         
+#         'HOST': 'localhost',        # Adresse locale
+#         'PORT': '3307',             # Port de MySQL
+#     }
+# }
 
 
 
