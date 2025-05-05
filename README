@@ -1,5 +1,3 @@
-"""
-
   structure du projet
 
   /gestion_immo/
@@ -126,11 +124,6 @@
       Pourquoi ?
       On dit à Django : "Quand une URL commence par /api/, regarde dans les apps pour savoir quoi faire."
 
-      
-
-
-
-      
   🔷🔷🔸🔷🔷🔸🔸🔷🔷🔷🔷🔸🔹🔷🔷🔷🔹🔹🔷🔷🔸🔸🔶🔶🔶🔸🔸🔸
   STEP 2 : Authentification - Partie Users
   🔷🔷🔸🔷🔷🔸🔸🔷🔷🔷🔷🔸🔹🔷🔷🔷🔹🔹🔷🔷🔸🔸🔶🔶🔶🔸🔸🔸
@@ -181,13 +174,3 @@
     /register/ → pour inscrire un nouvel utilisateur
     /login/ → pour se connecter et obtenir un Token JWT
     /token/refresh/ → pour rafraîchir ton token JWT quand il expire
-  
-  🔸🔸🔶🔶🔶🔸🔸🔸
-  🔸🔸🔶🔶🔶🔸🔸🔸
-  🔸🔸🔶🔶🔶🔸🔸🔸
-  🔸🔸🔶🔶🔶🔸🔸🔸
-  🔸🔸🔶🔶🔶🔸🔸🔸
-  🔸🔸🔶🔶🔶🔸🔸🔸
-      🔸🔸🔶🔶🔶🔸🔸🔸
-
-  """
