@@ -22,5 +22,6 @@ urlpatterns = [
 # On dit à Django : "Quand une URL commence par /api/, regarde dans les apps pour savoir quoi faire."
     path('api/users/', include('users.urls')),
     path('api/properties/', include('properties.urls')),
-    # path('api/', include('rentals.urls')),
+    path('api/rentals/', include('rentals.urls')),
+
 ]
