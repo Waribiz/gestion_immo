@@ -174,3 +174,20 @@
     /register/ → pour inscrire un nouvel utilisateur
     /login/ → pour se connecter et obtenir un Token JWT
     /token/refresh/ → pour rafraîchir ton token JWT quand il expire
+
+
+
+# Initialiser le dépôt
+git init
+
+# Ajouter tous les fichiers
+git add .
+
+# Commit avec message
+git commit -m "Initial commit"
+
+# Lier à GitHub
+git remote add origin https://github.com/Waribiz/gestion_immo.git
+
+# Envoyer le code
+git push -u origin main
