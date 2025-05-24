@@ -48,7 +48,7 @@
 
   Pourquoi on fait ça ?
 
-  Le venv (env/) te protège : ton projet utilise ses propres versions des librairies, sans toucher au reste de ton PC.
+  Le venv (venv/) te protège : ton projet utilise ses propres versions des librairies, sans toucher au reste de ton PC.
   Django = framework principal.
   Django REST Framework = module pour transformer Django en API rapide.
   SimpleJWT = gérer l’authentification avec des jetons sécurisés.

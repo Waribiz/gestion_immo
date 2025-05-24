@@ -5,3 +5,4 @@ class ContratSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contrat
         fields = '__all__'
+        read_only_fields = ['client']  # ⬅️ Empêche l'erreur "client is required"

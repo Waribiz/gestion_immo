@@ -10,12 +10,12 @@ class ContratViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if user.role == 'client':
+        if user.is_client:
             return self.queryset.filter(client=user)
         return self.queryset  # admin peut voir tous les contrats
 
     def perform_create(self, serializer):
-        if self.request.user.role == 'client':
+        if self.request.user.is_client:
             serializer.save(client=self.request.user)
         else:
             serializer.save()
