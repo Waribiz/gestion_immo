@@ -88,19 +88,24 @@ WSGI_APPLICATION = 'api_gest_immo.wsgi.application'
 
 
 
-# # connexion vers MYSQL 9.3 que j'ai installé 
+# # # connexion vers MYSQL 9.3 que j'ai installé 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'api_gest_immo_django',  # Nom de la base de données
+#         'USER': 'root',             # Username de la bdd
+#         'PASSWORD': 'waribiz',         
+#         'HOST': 'localhost',        # Adresse locale
+#         'PORT': '3307',             # Port de MySQL
+#     }
+# }
+
+
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'api_gest_immo_django',  # Nom de la base de données
-        'USER': 'root',             # Username de la bdd
-        'PASSWORD': 'waribiz',         
-        'HOST': 'localhost',        # Adresse locale
-        'PORT': '3307',             # Port de MySQL
-    }
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
-
-
 
 
 # Password validation
@@ -154,3 +159,4 @@ REST_FRAMEWORK = {
 
 #   Par défaut Django utilise son User standard. Là, on lui dit "utilise MON modèle à moi".
 AUTH_USER_MODEL = 'users.User'
+ALLOWED_HOSTS = ['.onrender.com'] # Autorise les requêtes depuis n'importe quel sous-domaine de onrender.com

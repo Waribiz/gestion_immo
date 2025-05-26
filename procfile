@@ -1,0 +1,1 @@
+web: gunicorn api_gest_immo.wsgi
